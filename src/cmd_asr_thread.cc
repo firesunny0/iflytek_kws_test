@@ -1,7 +1,7 @@
 /*
  * @Author: W.jy
  * @Date: 2021-05-26 23:24:36
- * @FilePath: /CPR_KWS_IFlytek_Test/src/cmd_asr_thread.cc
+ * @FilePath: /iflytek_kws_test/src/cmd_asr_thread.cc
  * @Description: desciption
  */
 #include "../include/cmd_asr_thread.h"
@@ -124,14 +124,14 @@ int CmdASRThread::writeAudioData(const char *dataBuf, int len) {
         MSP_EP_IN_SPEECH == ep_status) {
       errcode = QISRAudioWrite(session_id, (const void *)dataBuf, len, aud_stat,
                                &ep_status, &rec_status);
-      qDebug() << QTime::currentTime();
+      // qDebug() << QTime::currentTime();
       if (MSP_SUCCESS != errcode) {
         QISRSessionEnd(session_id, NULL);
         qDebug() << "Write error " << errcode;
         return errcode;
       }
       aud_stat = MSP_AUDIO_SAMPLE_CONTINUE;
-      qDebug() << "Continue";
+      // qDebug() << "Continue";
 
       if (MSP_EP_AFTER_SPEECH == ep_status) {
         qDebug() << "ASR EP AFTER";

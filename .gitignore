@@ -5,6 +5,7 @@ third_party/*
 .vscode/*
 libs/iflytek.cfg
 libs/msc/local_build*
+bin/*
 
 # Prerequisites
 *.d
