@@ -1,0 +1,8 @@
+#BNF+IAT 1.0;
+!grammar cmd;
+!slot <cmdwords>;
+
+!start <callstart>;
+<callstart>:<firstword>;
+
+<firstword>:没有反应!id(10000)|没有呼吸!id(10001)|没有脉搏!id(10001)|取得除颤仪!id(10003)|室颤!id(10003)|除颤仪到!id(10004)|充电完毕!id(10005)|放电完毕!id(10006)|通气完成!id(10007);

@@ -1,11 +1,13 @@
 /*
  * @Author: firesunny
  * @Date: 2023-01-04 22:06:16
- * @LastEditTime: 2023-01-04 22:35:17
+ * @LastEditTime: 2023-01-05 01:03:38
  * @FilePath: /CPR_KWS_IFlytek_Test/src/TcpServer.cc
  * @Description: base on kaldi
  */
 #include "../include/TcpServer.h"
+
+#include "glog/logging.h"
 
 TcpServer::TcpServer(int read_timeout) {
   server_desc_ = -1;
@@ -55,7 +57,7 @@ TcpServer::~TcpServer() {
   delete[] samp_buf_;
 }
 
-int32 TcpServer::Accept() {
+int32_t TcpServer::Accept() {
   LOG(INFO) << "Waiting for client...";
 
   socklen_t len;
@@ -114,18 +116,32 @@ bool TcpServer::ReadChunk(size_t len) {
     has_read_ += ret;
   }
   has_read_ /= sizeof(int16);
-  LOG(INFO) << "Read data(int16) count is " << has_read_;
+  // LOG(INFO) << "Read data(int16) count is " << has_read_;
 
   return has_read_ > 0;
+}
+
+int TcpServer::GetChunkBuf(int16 *buf, int len) {
+  // buf.resize(static_cast<int32>(has_read_));
+
+  // for (int i = 0; i < has_read_; i++)
+  //   buf[i] = static_cast<double>(samp_buf_[i]);
+  int to_read = len;
+  if (to_read > has_read_) to_read = has_read_;
+  // else
+  // LOG(WARNING) << "buf smaller than has_read_";
+
+  memcpy((char *)buf, (char *)samp_buf_, to_read * sizeof(int16));
+  return to_read;
 }
 
 std::vector<double> TcpServer::GetChunk() {
   std::vector<double> buf;
 
-  buf.Resize(static_cast<MatrixIndexT>(has_read_));
+  buf.resize(static_cast<int32>(has_read_));
 
   for (int i = 0; i < has_read_; i++)
-    buf(i) = static_cast<double>(samp_buf_[i]);
+    buf[i] = static_cast<double>(samp_buf_[i]);
 
   return buf;
 }

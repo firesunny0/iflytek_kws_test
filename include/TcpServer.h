@@ -31,6 +31,7 @@ class TcpServer {
   bool ReadChunk(
       size_t len);  // get more data and return false if end-of-stream
 
+  int GetChunkBuf(int16 *buf, int len);
   std::vector<double> GetChunk();  // get the data read by above method
 
   bool Write(const std::string &msg);  // write to accepted client
