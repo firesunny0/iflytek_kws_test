@@ -3,7 +3,8 @@ log/*
 res/*
 third_party/*
 .vscode/*
-libs/iflytek.cfg
+libs/iflytek copy.cfg
+libs/cmd.bnf
 libs/msc/local_build*
 bin/*
 
@@ -21,7 +22,7 @@ bin/*
 *.pch
 
 # Compiled Dynamic libraries
-*.so
+#*.so
 *.dylib
 *.dll
 
